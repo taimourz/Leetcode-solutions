@@ -13,10 +13,7 @@ public:
         }
         for(int i = n - 2; i >= 0; i--){
             suffixSum[i] = nums[i] * suffixSum[i+1];
-        }
-        for(int n: prefixSum) cout<<n<<", ";
-        cout<<endl;
-        for(int n: suffixSum) cout<<n<<", ";        
+        }   
         for(int i = 0; i < n; i++){
             if(i == 0) ans.push_back(suffixSum[i+1]);
             else if(i == n-1) ans.push_back(prefixSum[i-1]);
@@ -25,3 +22,9 @@ public:
         return ans;
     }
 };
+
+/*
+use the prefix and suffix sum technique
+precalculate them
+when creating the final output array from them. 
+*/
