@@ -8,9 +8,9 @@ public:
             int breath = r - l;
             int heightt = min(height[l], height[r]);
             int area = breath * heightt;
-            cout<<"l "<<l<<" r "<<r<<" breath "<<breath<<" height "<<heightt << "area "<< area<<endl;
             max_area = max(area, max_area);
             if(height[r] < height[l]) r--;
+            else if(height[r] > height[l]) l++;
             else l++;
         }
         return max_area;
