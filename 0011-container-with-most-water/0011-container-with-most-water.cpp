@@ -18,11 +18,9 @@ public:
 };
 
 /*
-two pointers obviously.
-we need to move the pointer which is smaller otherwise water overflows
-also keep track of max area. 
-what is length breath. breath (smaller) length (j - i)
-
+two pointers
+move pointer with small height b/c we want to maximize the area.
+imp thing to note x-axis starts from 0
 */
 
 
