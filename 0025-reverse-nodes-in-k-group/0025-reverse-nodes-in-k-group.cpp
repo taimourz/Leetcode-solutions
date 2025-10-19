@@ -65,32 +65,29 @@ public:
                 cnt--;
             }                
             
-                ListNode* temp = curr;
-                curr = curr->next;
-                temp->next = NULL;
-                
-                ListNode* tempPointer = reverseList(prev);
+            ListNode* temp = curr;
+            curr = curr->next;
+            temp->next = NULL;
+            
+            ListNode* tempPointer = reverseList(prev);
 
-                ListNode* segmentHead = tempPointer;
-                ListNode* segmentTail = prev;
-                
-                // set head for returning
-                reverseTimes++;
-                if(reverseTimes == 1){
-                  head = segmentHead;  
-                }else{
-                  oldTail->next = segmentHead;
-                }
+            ListNode* segmentHead = tempPointer;
+            ListNode* segmentTail = prev;
+            
+            // set head for returning
+            reverseTimes++;
+            if(reverseTimes == 1){
+                head = segmentHead;  
+            }else{
+                oldTail->next = segmentHead;
+            }
+            
+            // merge reverse list to new
+            segmentTail->next = curr;
+            oldTail = segmentTail;   
+                              
 
-
-                
-                // merge reverse list to new
-                segmentTail->next = curr;
-                oldTail = segmentTail;   
-                
-              
-
-                printList(head);
+                // printList(head);
 
         }
         return head;
@@ -102,14 +99,17 @@ public:
 
 /*
 
-- traverse the list. 
-- set a counter cnt = k 
-- decrement it upto 1 while keep moving the curr pointer. This way we are at the ending node of new list we want to reverse
-- before sending the head of this list for reversing make sure tha its tail next pointer is NULL.
-- It returns the new head with list reversed 
-- now we need to link this list to the rest of the list. we need to go upto end of the reversed list and set its tail next to curr.
-- we know that after first reversal we have the new head we would need to return. we are keeping track of this by a reverseTimes counter.
-- 
+- we will traverse. 
+- we check if enough nodes are available to reverse else break out
+- once confirmed. move the curr pointer till the end node. 
+- you know both new list head and tail
+- pass the head to function. it returns new head
+- set head and tail segments for new reversed list
+- here check if it was first reversal. in that case you need to change the head (for returning)
+- otherwise, we know we need to connect both tail of previous segment and now tail of current list to rest of list
+- at end, you need to make sure new tail is merged with old list
+- plus, store current tail as you are going to need it next time.
+
 
 1 2 3 4 5
 
