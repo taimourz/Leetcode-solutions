@@ -46,49 +46,52 @@ public:
         int reverseTimes = 0;
         ListNode* oldTail = NULL;        
 
-        while(curr->next != NULL){
+        while(curr != NULL){
             int cnt = k;
             ListNode* prev = curr;
+
+
+            ListNode* lookahead = curr;
+            int i = 0;
+            while(i < k && lookahead != nullptr){
+                lookahead = lookahead->next;
+                i++;
+            }
+            if(i < k) break;
+
             // cnt > 1 b/c I want the node 1 before the rest of the list
-            while(cnt > 1 && curr->next!=NULL){
+            while(cnt > 1){
                 curr = curr->next;
                 cnt--;
-            }    
-
-            if(cnt == 1){
+            }                
+            
                 ListNode* temp = curr;
                 curr = curr->next;
                 temp->next = NULL;
                 
-                ListNode* reverseHead = reverseList(prev);
+                ListNode* tempPointer = reverseList(prev);
 
-                ListNode* reverseListHead = reverseHead;
-                while(reverseHead->next!=NULL){
-                    reverseHead=reverseHead->next;
-                }
+                ListNode* segmentHead = tempPointer;
+                ListNode* segmentTail = prev;
                 
                 // set head for returning
                 reverseTimes++;
                 if(reverseTimes == 1){
-                  head = reverseListHead;  
+                  head = segmentHead;  
                 }else{
-                  oldTail->next = reverseListHead;
+                  oldTail->next = segmentHead;
                 }
 
 
                 
                 // merge reverse list to new
-                reverseHead->next = curr;
-                oldTail = reverseHead;   
+                segmentTail->next = curr;
+                oldTail = segmentTail;   
                 
               
 
                 printList(head);
 
-
-            }else{
-                break;
-            }
         }
         return head;
     }
@@ -111,9 +114,9 @@ public:
 1 2 3 4 5
 
         2               1               3       4   5
-reverseListHead   reverseHead         curr    
+segmentHead   reverseHead         curr    
 
 2  1            3               4                5
-        reverseListHead      reverseHead           curr 
+        segmentHead      reverseHead           curr 
 
 */
