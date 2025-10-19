@@ -21,7 +21,8 @@ public:
         cout << endl;
     }
 
-    ListNode* reverseList(ListNode* head, ListNode* endingNode){
+
+    ListNode* reverseList(ListNode* head){
         if(head == NULL) return {};
         
         ListNode* prev = NULL;
@@ -36,17 +37,19 @@ public:
         }
         
         printList(prev);
+
+
         return prev;
     }
-
     ListNode* reverseKGroup(ListNode* head, int k) {
         ListNode* curr = head;
         int reverseTimes = 0;
-        ListNode* prevTail = NULL; // track tail of previous reversed segment
+        ListNode* oldTail = NULL;        
 
-        while(curr != NULL && curr->next != NULL){
+        while(curr->next != NULL){
             int cnt = k;
             ListNode* prev = curr;
+            // cnt > 1 b/c I want the node 1 before the rest of the list
             while(cnt > 1 && curr->next!=NULL){
                 curr = curr->next;
                 cnt--;
@@ -57,31 +60,60 @@ public:
                 curr = curr->next;
                 temp->next = NULL;
                 
-                // reverse current segment
-                ListNode* reverseHead = reverseList(prev, temp);
-                
-                // \U0001f538 Instead of walking again, use `prev` (original head) as the tail
-                ListNode* tailOfReversedSegment = prev;  // this was the head before reversal
+                ListNode* reverseHead = reverseList(prev);
 
+                ListNode* reverseListHead = reverseHead;
+                while(reverseHead->next!=NULL){
+                    reverseHead=reverseHead->next;
+                }
+                
                 // set head for returning
                 reverseTimes++;
                 if(reverseTimes == 1){
-                    head = reverseHead;
-                } else {
-                    // connect previous segment tail to new reversed head
-                    prevTail->next = reverseHead;
+                  head = reverseListHead;  
+                }else{
+                  oldTail->next = reverseListHead;
                 }
 
-                // connect tail of this reversed segment to next part
-                tailOfReversedSegment->next = curr;
-                
-                // update prevTail for next iteration
-                prevTail = tailOfReversedSegment;
 
-            } else {
+                
+                // merge reverse list to new
+                reverseHead->next = curr;
+                oldTail = reverseHead;   
+                
+              
+
+                printList(head);
+
+
+            }else{
                 break;
             }
         }
         return head;
     }
 };
+
+
+
+
+/*
+
+- traverse the list. 
+- set a counter cnt = k 
+- decrement it upto 1 while keep moving the curr pointer. This way we are at the ending node of new list we want to reverse
+- before sending the head of this list for reversing make sure tha its tail next pointer is NULL.
+- It returns the new head with list reversed 
+- now we need to link this list to the rest of the list. we need to go upto end of the reversed list and set its tail next to curr.
+- we know that after first reversal we have the new head we would need to return. we are keeping track of this by a reverseTimes counter.
+- 
+
+1 2 3 4 5
+
+        2               1               3       4   5
+reverseListHead   reverseHead         curr    
+
+2  1            3               4                5
+        reverseListHead      reverseHead           curr 
+
+*/
