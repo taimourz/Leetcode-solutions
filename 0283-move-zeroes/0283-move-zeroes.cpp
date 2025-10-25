@@ -2,21 +2,17 @@ class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
 
-        for(int i = 0; i < nums.size(); i++){
-            int current = nums[i];
-            int right = i + 1;
-            while(right < nums.size()){
-                if(current == 0 && nums[right] != 0){
-                    int temp = nums[right];
-                    nums[right] = nums[i];
-                    nums[i] = temp;
+        for(int i = 1; i < nums.size(); i++){
+            int prev = nums[i-1];
+            int l = i;
+            while(l<nums.size()){
+                if(prev == 0 && nums[l] != 0){
+                    cout<<endl;
+                    swap(nums[i-1], nums[l]);
                     break;
-                }else{
-                    right++;
                 }
+                l++;
             }
         }
     }
 };
-
-
