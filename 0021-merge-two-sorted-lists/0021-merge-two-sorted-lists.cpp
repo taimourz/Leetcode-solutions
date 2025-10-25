@@ -11,50 +11,37 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-      if(list1 == NULL) return list2;
-      if(list2 == NULL) return list1;
+        if(list1==NULL && list2) return list2;
+        else if(list2==NULL && list1) return list1;
+        else if(list1==NULL && list2==NULL) return NULL;
+        ListNode* prev = NULL;
+        ListNode* prevHead = NULL;
 
-      ListNode* tail = NULL;
-      ListNode* tailHead = NULL;
-
-      ListNode* curr1 = list1;
-      ListNode* curr2 = list2;
-
-      while(curr1 != NULL && curr2 != NULL){
-        if(curr1->val <= curr2->val){
-            if(tail == NULL){
-                tail = curr1;
-                tailHead = tail;
-            } 
-            else{
-                tail->next  = curr1;
-                tail        = tail->next;
-            } 
-            curr1      = curr1->next;
-        }else{
-            if(tail == NULL){
-                tail = curr2;
-                tailHead = tail;
-            }             
-            else{
-                tail->next  = curr2;
-                tail        = tail->next;
-            } 
-            curr2      = curr2->next;
+        while(list1!=NULL && list2!=NULL){
+            if(list1->val <= list2->val){
+                if(prev==NULL){
+                    prev = list1;
+                    prevHead = list1;
+                }else{
+                    prev->next=list1;
+                    prev=prev->next;
+                }
+                list1 = list1->next;
+            }else{
+                if(prev==NULL){
+                    prev = list2;
+                    prevHead = list2;
+                }else{
+                    prev->next=list2;
+                    prev=prev->next;
+                }                
+                list2 = list2->next;    
+            }
         }
 
-      }
+        if(list1!=NULL) prev->next = list1;
+        else prev->next = list2;
 
-        if(curr1==NULL){
-            tail->next = curr2;
-
-        }else if(curr2==NULL){
-            tail->next = curr1;
-
-        }    
-
-
-        return tailHead;
-       
+        return prevHead;
     }
 };
