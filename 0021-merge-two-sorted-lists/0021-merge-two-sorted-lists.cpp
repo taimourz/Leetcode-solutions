@@ -11,37 +11,61 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        if(list1==NULL && list2) return list2;
-        else if(list2==NULL && list1) return list1;
-        else if(list1==NULL && list2==NULL) return NULL;
-        ListNode* prev = NULL;
-        ListNode* prevHead = NULL;
+        if (list1 == NULL) return list2;
+        if (list2 == NULL) return list1;
 
-        while(list1!=NULL && list2!=NULL){
+        ListNode* dummy = new ListNode();
+        ListNode* prev = dummy;
+
+        while(list1 != NULL && list2 != NULL){
             if(list1->val <= list2->val){
-                if(prev==NULL){
-                    prev = list1;
-                    prevHead = list1;
-                }else{
-                    prev->next=list1;
-                    prev=prev->next;
-                }
-                list1 = list1->next;
+                prev->next = list1;
+                list1=list1->next;
             }else{
-                if(prev==NULL){
-                    prev = list2;
-                    prevHead = list2;
-                }else{
-                    prev->next=list2;
-                    prev=prev->next;
-                }                
-                list2 = list2->next;    
+                prev->next = list2;
+                list2=list2->next;
+
             }
+            prev=prev->next;
         }
-
         if(list1!=NULL) prev->next = list1;
-        else prev->next = list2;
+        if(list2!=NULL) prev->next = list2;
 
-        return prevHead;
+        return dummy->next;
     }
 };
+
+
+/*
+
+ [1,2,4] [1,3,4]
+  
+        c1   
+              c2 
+
+   c1 <= c2 
+
+
+    c1 <= c2
+    2. <=  1
+
+
+
+    c1 <= c2
+    2. <=  3
+
+
+    c1 <= c2
+    4. <=  3
+
+p->1->1->2->3->4  
+
+    c1 <= c2
+    4. <=  4
+
+
+
+
+
+
+*/
