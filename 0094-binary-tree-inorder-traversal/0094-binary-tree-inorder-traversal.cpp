@@ -11,15 +11,31 @@
  */
 class Solution {
 public:
-    vector<int> ans;
-    void helper(TreeNode* root){
+    void helper(TreeNode* root, vector<int>& ans){
         if(root == NULL) return;
-        inorderTraversal(root->left);
+
+        helper(root->left, ans);
         ans.push_back(root->val);
-        inorderTraversal(root->right);
+        helper(root->right, ans);
+
     }
     vector<int> inorderTraversal(TreeNode* root) {
-        helper(root);
+        vector<int> ans;
+        helper(root, ans);
         return ans;
     }
 };
+
+/*
+
+
+left
+root
+right
+
+
+step 1 base case
+
+step 2 recursive call
+
+*/
