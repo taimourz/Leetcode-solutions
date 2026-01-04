@@ -22,8 +22,8 @@ var threeSum = function(nums) {
                 ans.push([nums[i], nums[l], nums[r]])
                 l++
                 r--
-                while(l < nums.length && nums[l] === nums[l+1]) l++
-                while(r >= 0 && nums[r] === nums[r-1]) r--
+                while(l < r && nums[l] === nums[l-1]) l++
+                while(l < r && nums[r] === nums[r+1]) r--
             }
             else if(curr_sum < 0)
             {
@@ -41,7 +41,8 @@ var threeSum = function(nums) {
 };
 
 
-// console.log(threeSum([-1,0,1,2,-1,-4]
+console.log(threeSum([-1,0,1,2,-1,-4]))
+console.log(threeSum([-2,0,1,1,2]))
 
 
 /*
@@ -52,3 +53,4 @@ var threeSum = function(nums) {
 -4 -1 -1 0 1 2 
 
 */
+
